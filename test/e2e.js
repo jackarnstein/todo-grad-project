@@ -64,6 +64,20 @@ testing.describe("end to end", function() {
                 assert.equal(elements.length, 2);
             });
         });
+
     });
+
+    testing.describe("on delete todo item", function() {
+        testing.it("can delete items", function() {
+            helpers.navigateToSite();
+            helpers.addTodo("delete todo item");
+            helpers.waitTodo();
+            helpers.DeleteToDo(0);
+            helpers.getTodoList().then(function(elements) {
+                assert.equal(elements.length, 0);
+            });
+        });
+    });
+
 });
 

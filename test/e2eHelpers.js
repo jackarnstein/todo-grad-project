@@ -90,4 +90,23 @@ module.exports.setupErrorRoute = function(action, route) {
             res.sendStatus(500);
         });
     }
+    if (action === "delete") {
+        router.post(route, function(req, res) {
+            res.sendStatus(500);
+        });
+    }
+    if (action === "put") {
+        router.post(route, function(req, res) {
+            res.sendStatus(404);
+        });
+    }
+};
+
+module.exports.DeleteToDo = function(id) {
+    driver.findElement(webdriver.By.css("#todo-list li button[id='" + id + "']")).click();
+};
+
+module.exports.waitTodo = function() {
+    var todoListPlaceholder = driver.findElement(webdriver.By.id("todo-list-placeholder"));
+    driver.wait(webdriver.until.elementIsNotVisible(todoListPlaceholder), 5000);
 };

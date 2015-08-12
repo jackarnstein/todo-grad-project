@@ -1,12 +1,12 @@
 body {
-    background: #E8F5E9;
+    background: #ffffff;
     color: rgba(0, 0, 0, 0.87);
     font-family: sans-serif;
     margin: 0;
 }
 
 header {
-    background-color: #000001;
+    background-color: #000000;
     padding: 0.5em 1em;
 }
 
@@ -20,6 +20,57 @@ h1 {
 h1 {
     display: block;
     font-size: 34px;
-    line-height: 34px;
+    line-height: 45px;
     color: rgba(255, 255, 255, 0.87);
+}
+
+.leftButton{
+    float: right;
+    margin-right:5px;
+}
+
+.rightButton{
+    float:right;
+    margin-right:5px;
+}
+
+.filterButton {
+    float: left;
+}
+
+li{
+    height: 40px;
+}
+
+.main{
+    margin-top:15px;
+
+}
+
+#todo-form{
+
+}
+
+#filters{
+    display: flex;
+}
+
+#allButton{
+    margin-left: 10px;
+}
+
+#completeButton{
+    margin-left: 10px;
+}
+
+#incompleteButton{
+    margin-left: 10px;
+}
+
+#deleteCompletedButton{
+    margin-left: 10px;
+}
+
+.navbar-default {
+    background-color: #333;
 }
