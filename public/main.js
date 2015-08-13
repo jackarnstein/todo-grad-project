@@ -20,6 +20,9 @@ var deleteCompletedPlaceholder = document.getElementById("deleteCompletedButton"
 var sortingMethod = null;
 var clearList = false;
 
+var app = angular.module("myApp", []);
+
+
 form.onsubmit = function(event) {
     var title = todoTitle.value;
     createTodo(title, function() {
