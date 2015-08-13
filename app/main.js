@@ -212,7 +212,6 @@ function clickDeleteButton() {
         .catch(function (error) {
             console.log("Request failed", error);
         });
-
 }
 
 function clickEditButton() {

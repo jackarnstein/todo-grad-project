@@ -4,28 +4,27 @@ angular.module('myApp.view1', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/view1', {
-    templateUrl: '/view1.html',
+    templateUrl: 'view1/view1.html',
     controller: 'View1Ctrl'
   });
 }])
 
-.controller('View1Ctrl', function(PersonsModel) {
+.controller('View1Ctrl', function($http, TodosModel) {
         var main = this;
         main.feed = {
             content: ''
         };
 
-        //this is going to be our try
-        // and catch statement bit
-        PersonsModel.getPersons()
-            .then(function(persons){
-            main.persons = persons;
+        //this is our controller
+        TodosModel.getTodos()
+            .then(function(todos){
+            main.todos = todos;
         })
             .catch(function(error){
                 main.error = error;
             })
             .finally(function(){
-                main.message = 'FINALLY DONE';
+                main.message = 'done';
             })
 
 
@@ -34,34 +33,64 @@ angular.module('myApp.view1', ['ngRoute'])
             main.liveText = liveText
         };
 
-        main.setCurrentSelection = function(person){
-            main.currentSelection = person;
+        main.setCurrentSelection = function(todo){
+            main.currentSelection = todo;
         };
 
         main.newPerson = {
             name: 'newbie'
         };
 
-        main.createNewPerson = function(person){
+        main.createNewPerson = function(todo){
             console.log("clicked");
-            main.persons[123] = person;
+            main.todos[123] = todo;
         };
-})
-.factory('PersonsModel', function($q){
-    var persons = [
-        {name:'dave'},
-        {name:'steve'},
-        {name:'balthazaar'}
-    ];
 
-        function getPersons(){
-            var deferred = $q.defer();
-            deferred.resolve(persons);
-            //Use to test blank lists
-            //deferred.reject(persons);
-            return deferred.promise;
+        main.getUrlForTodo = function(todoId){
+            return '/api/todo/' + todoId;
         }
+
+       // main.extract = function(result){
+        //    return result.data;
+       // }
+
+       // main.deleteTodo = function(todoId){
+       //     return $http.delete(main.getUrlForTodo(todoId).then(main.extract));
+       // }
+
+        main.deleteTodo = function(todoId){
+            return $http.delete('/api/todo/' + todoId.id);
+        }
+
+
+
+})
+
+.factory('TodosModel', function($http){
+
+
+        //extract out the array of objects from the get todolist
+        function extract(result){
+            return result.data;
+        }
+
+
+        function getTodos(){
+            //var deferred = $q.defer();
+            //deferred.resolve(todos);
+            //Use to test blank lists
+            //deferred.reject(todos);
+            //return deferred.promise;
+
+            return $http.get('/api/todo').then(extract);
+        }
+
+
+
+
+
+
         return {
-            getPersons: getPersons
+            getTodos: getTodos
         }
 })
