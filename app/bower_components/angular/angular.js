@@ -8606,7 +8606,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
 
       if (jqLite.hasData(firstElementToRemove)) {
         // Copy over user data (that includes Angular's $scope etc.). Don't copy private
-        // data here because there's no public interface in jQuery to do that and copying over
+        // data here because there's no app interface in jQuery to do that and copying over
         // event listeners (which is the main use of private data) wouldn't work anyway.
         jqLite(newNode).data(jqLite(firstElementToRemove).data());
 
@@ -11121,7 +11121,7 @@ function $IntervalProvider() {
  *
  * @description
  * $locale service provides localization rules for various Angular components. As of right now the
- * only public api is:
+ * only app api is:
  *
  * * `id` – `{string}` – locale id formatted as `languageId-countryId` (e.g. `en-us`)
  */
