@@ -58,7 +58,9 @@
 
 
 <h2>Selected Todo: {{main.currentSelection.name}}</h2>
-<div ng-repeat = "todo in main.todos" ng-click="main.deleteTodo(todo)">
+<!--<div ng-repeat = "todo in main.todos" ng-click="main.deleteTodo(todo)">-->
+<div ng-repeat = "todo in main.todos" ng-click="main.createTodo('something')">
+
     <h3>{{todo}}</h3>
 </div>
 

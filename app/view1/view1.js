@@ -28,25 +28,16 @@ angular.module('myApp.view1', ['ngRoute'])
             })
 
 
-        main.submitLiveText = function(liveText){
+        main.submitLiveText = function(liveText) {
             console.log('user', liveText);
             main.liveText = liveText
         };
 
-        main.setCurrentSelection = function(todo){
+        main.setCurrentSelection = function(todo) {
             main.currentSelection = todo;
         };
 
-        main.newPerson = {
-            name: 'newbie'
-        };
-
-        main.createNewPerson = function(todo){
-            console.log("clicked");
-            main.todos[123] = todo;
-        };
-
-        main.getUrlForTodo = function(todoId){
+        main.getUrlForTodo = function(todoId) {
             return '/api/todo/' + todoId;
         }
 
@@ -58,11 +49,14 @@ angular.module('myApp.view1', ['ngRoute'])
        //     return $http.delete(main.getUrlForTodo(todoId).then(main.extract));
        // }
 
-        main.deleteTodo = function(todoId){
+        main.deleteTodo = function(todoId) {
             return $http.delete('/api/todo/' + todoId.id);
         }
 
+        main.createTodo = function(todoLabel) {
+            $http.post('/api/todo/', {title:todoLabel});
 
+        }
 
 })
 
