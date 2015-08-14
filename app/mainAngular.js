@@ -18,22 +18,22 @@ angular.module('myApp.view1', ['ngRoute'])
         //this is going to be our try
         // and catch statement bit
         PersonsModel.getPersons()
-            .then(function(persons){
+            .then(function(persons) {
                 main.persons = persons;
             })
-            .catch(function(error){
+            .catch(function(error) {
                 main.error = error;
             })
             .finally(function(){
                 main.message = 'FINALLY DONE';
             })
 
-        main.submitLiveText = function(liveText){
+        main.submitLiveText = function(liveText) {
             console.log('user', liveText);
             main.liveText = liveText
         };
 
-        main.setCurrentSelection = function(person){
+        main.setCurrentSelection = function(person) {
             main.currentSelection = person;
         };
 
@@ -41,7 +41,7 @@ angular.module('myApp.view1', ['ngRoute'])
             name: 'newbie'
         };
 
-        main.createNewPerson = function(person){
+        main.createNewPerson = function(person) {
             console.log("clicked");
             main.persons[123] = person;
         };

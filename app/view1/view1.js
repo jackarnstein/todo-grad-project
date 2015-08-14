@@ -24,24 +24,24 @@ angular.module("myApp.view1", ["ngRoute"])
         };
 
 
-        main.resetForm = function(){
+        main.resetForm = function() {
             main.newTodo = {
                 title:"",
                 isComplete:false
             }
         };
 
-        main.createNewTodo = function (todo){
+        main.createNewTodo = function (todo) {
             main.createTodo(todo);
         };
 
 
         //this is our controller
         TodosModel.getTodos()
-            .then(function(todos){
+            .then(function(todos) {
             main.todos = todos;
         })
-            .catch(function(error){
+            .catch(function(error) {
                 main.error = error;
             })
             .finally(function(){
@@ -106,14 +106,14 @@ angular.module("myApp.view1", ["ngRoute"])
             }
         };
 
-        main.countAll = function(){
+        main.countAll = function() {
             var all = main.todos.length;
             return all;
         };
 
         main.countComplete = function(){
             var complete = 0;
-            main.todos.forEach(function(item){
+            main.todos.forEach(function(item) {
                 if (item.isComplete){
                     complete = complete + 1;
                 }
@@ -121,9 +121,9 @@ angular.module("myApp.view1", ["ngRoute"])
             return complete;
         };
 
-        main.countIncomplete = function(){
+        main.countIncomplete = function() {
             var incomplete = 0;
-            main.todos.forEach(function(item){
+            main.todos.forEach(function(item) {
                 if (!item.isComplete){
                     incomplete = incomplete + 1;
                 }
@@ -133,7 +133,7 @@ angular.module("myApp.view1", ["ngRoute"])
 
 })
 
-.factory("TodosModel", function($http){
+.factory("TodosModel", function($http) {
 
         //extract out the array of objects from the get todolist
         function extract(result){
@@ -141,7 +141,7 @@ angular.module("myApp.view1", ["ngRoute"])
         };
 
 
-        function getTodos(){
+        function getTodos() {
             //var deferred = $q.defer();
             //deferred.resolve(todos);
             //Use to test blank lists
