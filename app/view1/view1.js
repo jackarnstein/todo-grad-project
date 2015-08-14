@@ -90,9 +90,18 @@ angular.module('myApp.view1', ['ngRoute'])
 
         main.editTodo = function(todo) {
             $http.put('/api/todo/' + todo.id, {
-                isComplete: true
+                isComplete: !todo.isComplete
             });
+            todo.isComplete = !todo.isComplete;
         };
+
+        main.deleteAll = function() {
+            for(var i = 0; i<main.todos.length; i++){
+                if(main.todos[i].isComplete){
+                    main.deleteTodo(main.todos[i]);
+                }
+            }
+        }
 
 })
 
