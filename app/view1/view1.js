@@ -9,19 +9,32 @@ angular.module('myApp.view1', ['ngRoute'])
   });
 }])
 
-.controller('View1Ctrl', function($http, TodosModel) {
+.controller('View1Ctrl', function($http, TodosModel)  {
         var main = this;
+
         main.feed = {
             content: ''
         };
+
+        main.newTodo = {
+            title:'',
+            isComplete:false
+        };
+
+        main.createNewTodo = function (todo){
+            main.createTodo(todo);
+        }
+
 
         //this is our controller
         TodosModel.getTodos()
             .then(function(todos){
             main.todos = todos;
+                console.log("loaded todos");
         })
             .catch(function(error){
                 main.error = error;
+                console.log("failed to load todos");
             })
             .finally(function(){
                 main.message = 'done';
@@ -39,34 +52,42 @@ angular.module('myApp.view1', ['ngRoute'])
 
         main.getUrlForTodo = function(todoId) {
             return '/api/todo/' + todoId;
-        }
+        };
 
-       // main.extract = function(result){
-        //    return result.data;
-       // }
+        main.deleteTodo = function(todo) {
+            var response = $http.delete('/api/todo/' + todo.id)
+                .then(function (response) {
+                console.log(response);
 
-       // main.deleteTodo = function(todoId){
-       //     return $http.delete(main.getUrlForTodo(todoId).then(main.extract));
-       // }
+                    main.todos = main.todos.filter(function(item) {
+                        return item.id !== todo.id;
+                    });
+            }, function (response) {
+                console.log(response);
+            })
+        };
 
-        main.deleteTodo = function(todoId) {
-            return $http.delete('/api/todo/' + todoId.id);
-        }
-
-        main.createTodo = function(todoLabel) {
-            $http.post('/api/todo/', {title:todoLabel});
-
-        }
+        main.createTodo = function(todo) {
+            $http.post('/api/todo/', {
+                title:todo.title,
+                isComplete: false
+            });
+        };
+        
+        main.editTodo = function(todo) {
+            $http.put('/api/todo/' + todo.id, {
+                isComplete: true
+            });
+        };
 
 })
 
 .factory('TodosModel', function($http){
 
-
         //extract out the array of objects from the get todolist
         function extract(result){
             return result.data;
-        }
+        };
 
 
         function getTodos(){
@@ -77,12 +98,7 @@ angular.module('myApp.view1', ['ngRoute'])
             //return deferred.promise;
 
             return $http.get('/api/todo').then(extract);
-        }
-
-
-
-
-
+        };
 
         return {
             getTodos: getTodos

@@ -45,10 +45,17 @@
         </div>
     </div>
     <div class="form-group" id = "filters">
-        <form id="todo-form">
-            <input id="new-todo" placeholder="What needs to be done?" autofocus>
-            <input id="submit-todo" type="submit" value="Create">
+        <h2>Create new todo</h2>
+        <form
+            name = "main.createForm"
+            class = "create-todo"
+            role = "form"
+            ng-submit = "main.createNewTodo(main.newTodo)"
+            novalidate>
+            <input type = "text" ng-model = "main.newTodo.title">
+            <button type = "submit"> Create </button>
         </form>
+
         <div id = "allButton"></div>
         <div id = "completeButton"></div>
         <div id = "incompleteButton"></div>
@@ -56,12 +63,12 @@
     </div>
 </nav>
 
-
 <h2>Selected Todo: {{main.currentSelection.name}}</h2>
 <!--<div ng-repeat = "todo in main.todos" ng-click="main.deleteTodo(todo)">-->
-<div ng-repeat = "todo in main.todos" ng-click="main.createTodo('something')">
-
-    <h3>{{todo}}</h3>
+<div ng-repeat = "todo in main.todos">
+    <h3>{{todo.title}} {{todo.isComplete}}</h3>
+    <button type ="button" ng-click="main.deleteTodo(todo)"> DELETE</button>
+    <button type ="button" ng-click="main.editTodo(todo)"> COMPLETE</button>
 </div>
 
 <h2>Loading list...{{main.message}}</h2>
