@@ -45,4 +45,4 @@ angular.module('myApp.view1', ['ngRoute'])
             console.log("clicked");
             main.persons[123] = person;
         };
-    })
+    });

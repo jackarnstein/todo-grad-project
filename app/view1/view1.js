@@ -1,37 +1,39 @@
-'use strict';
+"use strict";
 
-angular.module('myApp.view1', ['ngRoute'])
+angular.module("myApp.view1", ["ngRoute"])
 
-.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/view1', {
-    templateUrl: 'view1/view1.html',
-    controller: 'View1Ctrl'
+.config(["$routeProvider", function($routeProvider) {
+  $routeProvider.when("/view1", {
+    templateUrl: "view1/view1.html",
+    controller: "View1Ctrl"
   });
 }])
 
-.controller('View1Ctrl', function($http, TodosModel)  {
+.controller("View1Ctrl", function($http, TodosModel)  {
         var main = this;
 
+
         main.feed = {
-            content: ''
+            all: "",
+            incomplete: ""
         };
 
         main.newTodo = {
-            title:'',
+            title:"",
             isComplete:false
         };
 
 
         main.resetForm = function(){
             main.newTodo = {
-                title:'',
+                title:"",
                 isComplete:false
             }
-        }
+        };
 
         main.createNewTodo = function (todo){
             main.createTodo(todo);
-        }
+        };
 
 
         //this is our controller
@@ -43,12 +45,12 @@ angular.module('myApp.view1', ['ngRoute'])
                 main.error = error;
             })
             .finally(function(){
-                main.message = 'List Loaded';
-            })
+                main.message = "List Loaded"
+            });
 
 
         main.submitLiveText = function(liveText) {
-            console.log('user', liveText);
+            console.log("user", liveText);
             main.liveText = liveText
         };
 
@@ -57,31 +59,32 @@ angular.module('myApp.view1', ['ngRoute'])
         };
 
         main.getUrlForTodo = function(todoId) {
-            return '/api/todo/' + todoId;
+            return "/api/todo/" + todoId;
         };
 
         main.deleteTodo = function(todo) {
-            var response = $http.delete('/api/todo/' + todo.id)
+            var response = $http.delete("/api/todo/" + todo.id)
                 .then(function (response) {
                 console.log(response);
-
                     main.todos = main.todos.filter(function(item) {
                         return item.id !== todo.id;
                     });
-            }, function (response) {
+
+                }, function (response) {
                 console.log(response);
             })
         };
 
         main.createTodo = function(todo) {
-            $http.post('/api/todo/', {
+            $http.post("/api/todo/", {
                 title:todo.title,
                 isComplete: false
             }).then(function(response){
                     console.log(response);
                     todo.id = response.data.id;
                 main.todos.push(todo);
-                main.resetForm();
+
+                    main.resetForm();
             },function(response){
                     console.log(response);
                 }
@@ -89,7 +92,7 @@ angular.module('myApp.view1', ['ngRoute'])
         };
 
         main.editTodo = function(todo) {
-            $http.put('/api/todo/' + todo.id, {
+            $http.put("/api/todo/" + todo.id, {
                 isComplete: !todo.isComplete
             });
             todo.isComplete = !todo.isComplete;
@@ -97,15 +100,40 @@ angular.module('myApp.view1', ['ngRoute'])
 
         main.deleteAll = function() {
             for(var i = 0; i<main.todos.length; i++){
-                if(main.todos[i].isComplete){
+                if (main.todos[i].isComplete){
                     main.deleteTodo(main.todos[i]);
                 }
             }
+        };
+
+        main.countAll = function(){
+            var all = main.todos.length;
+            return all;
+        };
+
+        main.countComplete = function(){
+            var complete = 0;
+            main.todos.forEach(function(item){
+                if (item.isComplete){
+                    complete = complete + 1;
+                }
+            });
+            return complete;
+        };
+
+        main.countIncomplete = function(){
+            var incomplete = 0;
+            main.todos.forEach(function(item){
+                if (!item.isComplete){
+                    incomplete = incomplete + 1;
+                }
+            });
+            return incomplete;
         }
 
 })
 
-.factory('TodosModel', function($http){
+.factory("TodosModel", function($http){
 
         //extract out the array of objects from the get todolist
         function extract(result){
@@ -120,10 +148,10 @@ angular.module('myApp.view1', ['ngRoute'])
             //deferred.reject(todos);
             //return deferred.promise;
 
-            return $http.get('/api/todo').then(extract);
+            return $http.get("/api/todo").then(extract);
         };
 
         return {
             getTodos: getTodos
         }
-})
+});
