@@ -21,6 +21,14 @@ angular.module('myApp.view1', ['ngRoute'])
             isComplete:false
         };
 
+
+        main.resetForm = function(){
+            main.newTodo = {
+                title:'',
+                isComplete:false
+            }
+        }
+
         main.createNewTodo = function (todo){
             main.createTodo(todo);
         }
@@ -30,14 +38,12 @@ angular.module('myApp.view1', ['ngRoute'])
         TodosModel.getTodos()
             .then(function(todos){
             main.todos = todos;
-                console.log("loaded todos");
         })
             .catch(function(error){
                 main.error = error;
-                console.log("failed to load todos");
             })
             .finally(function(){
-                main.message = 'done';
+                main.message = 'List Loaded';
             })
 
 
@@ -71,9 +77,17 @@ angular.module('myApp.view1', ['ngRoute'])
             $http.post('/api/todo/', {
                 title:todo.title,
                 isComplete: false
-            });
+            }).then(function(response){
+                    console.log(response);
+                    todo.id = response.data.id;
+                main.todos.push(todo);
+                main.resetForm();
+            },function(response){
+                    console.log(response);
+                }
+            )
         };
-        
+
         main.editTodo = function(todo) {
             $http.put('/api/todo/' + todo.id, {
                 isComplete: true

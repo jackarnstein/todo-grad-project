@@ -28,7 +28,6 @@ angular.module('myApp.view1', ['ngRoute'])
                 main.message = 'FINALLY DONE';
             })
 
-
         main.submitLiveText = function(liveText){
             console.log('user', liveText);
             main.liveText = liveText
